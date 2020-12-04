@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: churro
+  name: churro-operator
+spec:
+  containers:
+  - image: registry.gitlab.com/churro-group/churro/churro-operator:latest
+    imagePullPolicy: IfNotPresent
+    name: churro-operator
+    volumeMounts:
+    - name: templatesdir
+      mountPath: /templates
+    env:
+    - name: WATCH_NAMESPACE
+      value: ""
+    - name: CHURRO_NAMESPACE
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: metadata.namespace
+  restartPolicy: Always
+  serviceAccount: churro-operator
+  serviceAccountName: churro-operator
+  volumes:
+  - name: templatesdir
+    configMap:
+      name: churro-templates

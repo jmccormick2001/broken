@@ -1,0 +1,73 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: churro-operator
+rules:
+- apiGroups:
+  - churro.project.io
+  resources:
+  - pipelines
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ''
+  resources:
+  - pods/exec
+  - pods
+  verbs:
+  - '*'
+- apiGroups:
+  - 'rbac.authorization.k8s.io'
+  resources:
+  - roles
+  - rolebindings
+  - services
+  verbs:
+  - list
+  - watch
+  - create
+  - delete
+  - get
+- apiGroups:
+  - ''
+  resources:
+  - persistentvolumeclaims
+  verbs:
+  - create
+  - get
+  - delete
+  - list
+  - watch
+- apiGroups:
+  - 'policy'
+  resources:
+  - poddisruptionbudgets
+  verbs:
+  - list
+  - watch
+  - create
+- apiGroups:
+  - ''
+  resources:
+  - secrets
+  - serviceaccounts
+  - services
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+- apiGroups:
+  - 'apps'
+  resources:
+  - statefulsets
+  verbs:
+  - list
+  - watch
+  - create
